@@ -1,0 +1,93 @@
+<HTML>
+	<head>
+		<script type="text/javascript">
+			let tc;
+			let eventName;
+			let time;
+
+			let interval;
+
+			window.addEventListener("load", ()=>{
+
+				let urlParams;
+				(window.onpopstate = function () {
+				    var match,
+				        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+				        search = /([^&=]+)=?([^&]*)/g,
+				        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+				        query  = window.location.search.substring(1);
+
+				    urlParams = {};
+				    while (match = search.exec(query))
+				       urlParams[decode(match[1])] = decode(match[2]);
+				})();
+
+				tc = document.querySelector("time-calc");
+				//tc.innerHTML = new Date(urlParams.time);
+
+				time = urlParams.time;
+				eventName = urlParams.eventName;
+
+				if( /^[0-9]+$/.test(time) ){
+					time = parseInt(time);
+				}
+				time = new Date(time);
+
+				interval = setInterval(updateTime, 1000);
+			});
+
+			let ONE_DAY = 1000*60*60*24;
+			let ONE_HOUR = 1000*60*60;
+			let ONE_MIN = 1000*60;
+			let ONE_SEC = 1000;
+
+			function updateTime(){
+
+				let msDif = time.getTime() - (new Date()).getTime();
+
+				let dayDif = parseInt(msDif / ( ONE_DAY ));
+				msDif -= dayDif * ONE_DAY;
+				let hrDif = parseInt(msDif / ( ONE_HOUR ));
+				msDif -= hrDif * ONE_HOUR;
+				let minDif = parseInt(msDif / ( ONE_MIN ));
+				msDif -= minDif * ONE_MIN;
+				let secDif = parseInt(msDif / ( ONE_SEC ));
+
+				let afterWords = msDif > 0 ? "until ":"since ";
+				afterWords += eventName !== undefined && eventName !== "" ? eventName : "event";
+
+				dayDif = Math.abs(dayDif);
+
+				hrDif = hrDif < 10 ? "0"+hrDif : hrDif;
+				minDif = minDif < 10 ? "0"+minDif : minDif;
+				secDif = secDif < 10 ? "0"+secDif : secDif;
+
+				let showString = "";
+				if( showString === "" && dayDif != 0){
+					showString += dayDif+" days ";
+				}
+
+				if( showString !== "" || showString === "" && hrDif != 0){
+					showString += hrDif+" hrs ";
+				}
+
+				if( showString !== "" || showString === "" && minDif != 0){
+					showString += minDif+" min ";
+				}
+
+				if( showString !== "" || showString === "" && secDif != 0){
+					showString += secDif+" sec ";
+				}
+
+				showString+=afterWords;
+
+				tc.innerHTML = showString;
+
+			}
+
+		</script>
+	</head>
+	<body>
+		<time-calc></time-calc>
+	</body>
+</HTML>
