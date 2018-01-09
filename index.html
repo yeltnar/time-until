@@ -1,11 +1,17 @@
 <HTML>
 	<head>
+		<title>Time Until</title>
 		<script type="text/javascript">
 			let tc;
 			let eventName;
 			let time;
 
 			let interval;
+
+			let ONE_DAY = 1000*60*60*24;
+			let ONE_HOUR = 1000*60*60;
+			let ONE_MIN = 1000*60;
+			let ONE_SEC = 1000;
 
 			window.addEventListener("load", ()=>{
 
@@ -34,12 +40,12 @@
 				time = new Date(time);
 
 				interval = setInterval(updateTime, 1000);
-			});
 
-			let ONE_DAY = 1000*60*60*24;
-			let ONE_HOUR = 1000*60*60;
-			let ONE_MIN = 1000*60;
-			let ONE_SEC = 1000;
+				if( eventName !== undefined && eventName !== "" ){
+					document.querySelector("title").innerHTML = eventName+" count down";
+				}
+				
+			});
 
 			function updateTime(){
 
