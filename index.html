@@ -22,7 +22,7 @@
 				       urlParams[decode(match[1])] = decode(match[2]);
 				})();
 
-				tc = document.querySelector("time-calc");
+				tc = document.querySelector(".time-calc");
 				//tc.innerHTML = new Date(urlParams.time);
 
 				time = urlParams.time;
@@ -45,6 +45,11 @@
 
 				let msDif = time.getTime() - (new Date()).getTime();
 
+				let afterWords = msDif > 0 ? "until ":"since ";
+				afterWords += eventName !== undefined && eventName !== "" ? eventName : "event";
+
+				msDif = Math.abs(msDif);
+
 				let dayDif = parseInt(msDif / ( ONE_DAY ));
 				msDif -= dayDif * ONE_DAY;
 				let hrDif = parseInt(msDif / ( ONE_HOUR ));
@@ -52,11 +57,6 @@
 				let minDif = parseInt(msDif / ( ONE_MIN ));
 				msDif -= minDif * ONE_MIN;
 				let secDif = parseInt(msDif / ( ONE_SEC ));
-
-				let afterWords = msDif > 0 ? "until ":"since ";
-				afterWords += eventName !== undefined && eventName !== "" ? eventName : "event";
-
-				dayDif = Math.abs(dayDif);
 
 				hrDif = hrDif < 10 ? "0"+hrDif : hrDif;
 				minDif = minDif < 10 ? "0"+minDif : minDif;
@@ -86,8 +86,13 @@
 			}
 
 		</script>
+		<style>
+			.time-calc{
+				font-size:6rem;
+			}
+		</style>
 	</head>
 	<body>
-		<time-calc></time-calc>
+		<div class="time-calc"></div>
 	</body>
 </HTML>
