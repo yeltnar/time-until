@@ -32,6 +32,12 @@
 				//tc.innerHTML = new Date(urlParams.time);
 
 				time = urlParams.time;
+
+				if(time === undefined){
+					const now_ms = new Date().toString();
+					window.location.href = `${window.location.protocol}//${window.location.hostname}${window.location.pathname}?time=${now_ms}`
+				}
+
 				eventName = urlParams.eventName;
 
 				if( /^[0-9]+$/.test(time) ){
