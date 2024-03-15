@@ -34,8 +34,8 @@
 				time = urlParams.time;
 
 				if(time === undefined){
-					const now_ms = new Date().toString();
-					window.location.href = `${window.location.protocol}//${window.location.hostname}${window.location.pathname}?time=${now_ms}`
+					const now_string = new Date().toString();
+					setUrl(now_string);
 				}
 
 				eventName = urlParams.eventName;
@@ -97,6 +97,14 @@
 
 			}
 
+			function setUrl(now_string){
+				let link = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
+				if( now_string !== undefined ){
+					link = `${link}?time=${now_string}`;
+				}
+				console.log(link);
+				window.location.href=link;
+			}
 		</script>
 		<style>
 			.time-calc{
@@ -105,6 +113,7 @@
 		</style>
 	</head>
 	<body>
+		<button onclick="setUrl()">reset</button>
 		<div class="time-calc"></div>
 	</body>
 </HTML>
