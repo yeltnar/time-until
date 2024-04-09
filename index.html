@@ -15,6 +15,13 @@
 
 			window.addEventListener("load", ()=>{
 
+				const new_urlParams = new URLSearchParams(window.location.search);
+				const title = new_urlParams.get('title');
+
+				if(title!==null){
+					document.querySelector('title').innerText = title;
+				}
+
 				let urlParams;
 				(window.onpopstate = function () {
 				    var match,
