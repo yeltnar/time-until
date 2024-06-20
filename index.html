@@ -13,13 +13,17 @@
 			let ONE_MIN = 1000*60;
 			let ONE_SEC = 1000;
 
+			let title = "Time Until";
+
 			window.addEventListener("load", ()=>{
 
 				const new_urlParams = new URLSearchParams(window.location.search);
-				const title = new_urlParams.get('title');
+				const new_title = new_urlParams.get('title');
 
-				if(title!==null){
-					document.querySelector('title').innerText = title;
+				if(new_title!==null){
+					document.querySelector('title').innerText = new_title;
+					title = new_title;
+					console.log(`title is ${title}`);
 				}
 
 				let urlParams;
@@ -105,11 +109,10 @@
 			}
 
 			function setUrl(now_string){
-				let link = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
+				let link = `${window.location.protocol}//${window.location.host}${window.location.pathname}?title=${document.title}`;				
 				if( now_string !== undefined ){
-					link = `${link}?time=${now_string}`;
+					link = `${link}&time=${now_string}`;
 				}
-				console.log(link);
 				window.location.href=link;
 			}
 		</script>
