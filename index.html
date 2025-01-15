@@ -50,6 +50,7 @@
 				}
 
         document.querySelector("#time_input").value = time; 
+        document.querySelector("#title_input").value = new_title 
 
 				eventName = urlParams.eventName;
 
@@ -110,8 +111,9 @@
 
 			}
 
-			function setUrl(now_string){
-				let link = `${window.location.protocol}//${window.location.host}${window.location.pathname}?title=${document.title}`;				
+			function setUrl(now_string, title){
+        title = title === undefined ? document.title : title; 
+				let link = `${window.location.protocol}//${window.location.host}${window.location.pathname}?title=${title}`;	
 				if( now_string !== undefined ){
 					link = `${link}&time=${now_string}`;
 				}
@@ -127,7 +129,8 @@
 	<body style="background-color: black; color:white;">
 		<button onclick="setUrl()">reset</button>
 		<input id="time_input" value=""></input>
-    <button onclick="(()=>{setUrl(document.querySelector('#time_input').value)})()">submit</button>
+		<input id="title_input" value=""></input>
+    <button onclick="(()=>{setUrl(document.querySelector('#time_input').value, document.querySelector('#title_input').value)})()">submit</button>
 		<div class="time-calc"></div>
 	</body>
 </HTML>
